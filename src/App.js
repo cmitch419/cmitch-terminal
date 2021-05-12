@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+// TODO: lift these things into separate components
 const $TerminalWindow = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -10,6 +11,7 @@ const $TerminalWindow = styled.div`
   left: 0;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
   max-height: 100vh;
 `;
 const $TitleBar = styled.div`
@@ -57,7 +59,7 @@ const $CommandLine = styled.div`
   background: #222222;
   font-family: inherit;
   font-size: inherit;
-  color: lightgreen;
+  color: cyan;
 
   .commandPrefix {
     flex-grow: 0;
@@ -120,6 +122,9 @@ Welcome to cmitch.info!
 Type \`help' to get started
 `;
 
+// TODO: refactor the entire config system
+// TODO: rethink the command system
+
 const config = {
   TERMINAL_TITLE: 'Terminal - cmitch.info',
   COMMAND_LINE_PREFIX: 'anon@cmitch.info: $ ',
@@ -131,8 +136,9 @@ const config = {
       `Thanks for visiting!`,
       '',
       '\tcontact',
-      '\thelp',
-      '\tidunnolol'
+      '\temail',
+      '\tgithub',
+      '\tlinkedin'
     ],
     'contact': [
       '****************************************************',
@@ -156,6 +162,14 @@ function App() {
     setCommand(ev.target.value);
   }
 
+  function openUrl(url) {
+    const win = window.open(url, '_blank', 'noreferrer');
+    if (win != null) {
+      win.focus();
+    }
+  }
+
+  // TODO: got a lot of cleaning to do, baby
   function sendCommandAndAddToHistory() {
     setHistory([...history, command]);
     let args = command.trim().split(' ');
@@ -167,6 +181,18 @@ function App() {
         setOutput(['']);
         setCommand('');
         return;
+      case 'email':
+        openUrl('mailto:cmitch419+terminal@gmail.com?subject=[cmitch.info] Hey!');
+        break;
+      case 'github':
+        openUrl('https://www.github.com/cmitch419');
+        break;
+      case 'linkedin':
+        openUrl('https://www.linkedin.com/in/cmitch419');
+        break;
+      case 'instagram':
+        openUrl('https://www.instagram.com/prof');
+        break;
       case '':
         break;
       default:
