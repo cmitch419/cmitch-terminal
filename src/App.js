@@ -1,5 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+
+const $Container = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  font-size: 1rem;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  color: lightgreen;
+  display: flex;
+  flex-direction: column;
+  background: black;
+`;
 
 const $TopBar = styled.div`
   width: 100%;
@@ -11,22 +25,21 @@ const $TopBar = styled.div`
 `;
 
 const $CommandLine = styled.div`
-  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
   padding-left: 0.5rem;
-  box-sizing: border-box;
-  .commandprefix {
-    display: inline;
-    font-size: 1rem;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-    color: cyan;
-  }
   input {
+    padding-left: 0.5rem;
+    flex-grow: 1;
     font-size: 1rem;
+    min-height: 1rem;
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
     color: lightgreen;
     background-color: black;
-    outline: none;
     border: none;
+    outline: none;
     &:focus {
       border: none;
       outline: none;
@@ -35,18 +48,41 @@ const $CommandLine = styled.div`
 `;
 
 const $Output = styled.div`
-  width: 100%;
   flex-grow: 1;
   margin: 0;
   padding: 0;
   padding-left: 0.5rem;
-  color: lightgreen;
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  p {
+  // color: lightgreen;
+  // font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  // font-size: 1rem;
+  pre {
+    flex-grow: 1;
+    white-space: pre-wrap;
+    word-wrap: break-word;
     margin: 0;
     padding: 0;
-    height: 1rem;
   }
+`;
+
+const SPLASH_ASCII = `
+                              __
+                     /\\    .-" /
+                    /  ; .'  .' 
+                   :   :/  .'   
+                    \\  ;-.'     
+       .--""""--..__/     \`.    
+     .'           .'    \`o  \\   
+    /                    \`   ;  
+   :                  \\      :  
+ .-;        -.         \`.__.-'  
+:  ;          \\     ,   ;       
+'._:           ;   :   (        
+    \\/  .__    ;    \\   \`-.     
+ bug ;     "-,/_..--"\`-..__)    
+     '""--.._:
+     Art by Blazej Kozlowski
+
+Welcome to cmitch.info
 `;
 
 const config = {
@@ -57,7 +93,11 @@ const config = {
       `CMITCH bash, version 0.1.0`,
       `¯\\(°_o)/¯ <( HELP! )`,
       `These shell commands are defined internally.  Type \`help' to see this list.`,
-      `Thanks for visiting!`
+      `Thanks for visiting!`,
+      '',
+      'contact',
+      'help',
+      'idunnolol'
     ],
     'contact': [
       'Chris Mitchell',
@@ -70,7 +110,7 @@ const config = {
 };
 
 function App() {
-  const [output, setOutput] = useState([]);
+  const [output, setOutput] = useState([...SPLASH_ASCII.split('\n')]);
   const [history, setHistory] = useState([]);
   const [command, setCommand] = useState();
   const [historyIdx, setHistoryIdx] = useState(history.length);
@@ -131,18 +171,18 @@ function App() {
   }
 
   return (
-    <>
+    <$Container>
       <$TopBar>{config.TERMINAL_TITLE}</$TopBar>
       <$Output>
         {output && output.map((line) =>
-          <>{line}<br /></>
+          <pre>{line}<br /></pre>
         )}
       </$Output>
       <$CommandLine>
         <div class="commandprefix">{config.COMMAND_LINE_PREFIX}</div>
         <input type="text" value={command} onChange={handleCommandLineInput} onKeyDown={handleKeys} autoFocus />
       </$CommandLine>
-    </>
+    </$Container>
   );
 }
 
