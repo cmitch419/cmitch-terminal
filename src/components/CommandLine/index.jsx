@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const $CommandLine = styled.input`
@@ -11,7 +11,7 @@ const $CommandLine = styled.input`
   background-color: black;
   outline: none;
   border: none;
-  & :focus {
+  &:focus {
     border: none;
     outline: none;
   }
@@ -25,6 +25,7 @@ const COMMAND_LINE_STR = '> ';
 
 const CommandLine = (props) => {
   const [text, setText] = useState(COMMAND_LINE_STR);
+  const [command, setCommand] = useState([]);
 
   function handleChange(ev) {
     if (ev.target.value && ev.target.value.indexOf(COMMAND_LINE_STR) === 0) {
@@ -35,8 +36,12 @@ const CommandLine = (props) => {
     }
   }
 
+  useEffect(() => {
+    
+  }, []);
+
   return (
-    <$CommandLine type="text" value={text} onChange={handleChange} />
+    <$CommandLine type="text" value={text} onChange={handleChange} autoFocus={true} />
   ); 
 };
 

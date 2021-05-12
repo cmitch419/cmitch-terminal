@@ -5,7 +5,7 @@ const $TopBar = styled.div`
   min-height: 1.5rem;
   padding-left: 0.5rem;
   box-sizing: border-box;
-  // border: solid grey;
+  border: solid grey;
   color: white;
   background-color: darkgray;
 `;
