@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/cmitch-terminal/static/css/main.3d31f555.chunk.css",
-    "main.js": "/cmitch-terminal/static/js/main.d6e24ae8.chunk.js",
-    "main.js.map": "/cmitch-terminal/static/js/main.d6e24ae8.chunk.js.map",
+    "main.css": "/cmitch-terminal/static/css/main.d460a297.chunk.css",
+    "main.js": "/cmitch-terminal/static/js/main.6f7260bf.chunk.js",
+    "main.js.map": "/cmitch-terminal/static/js/main.6f7260bf.chunk.js.map",
     "runtime-main.js": "/cmitch-terminal/static/js/runtime-main.87d7e8c0.js",
     "runtime-main.js.map": "/cmitch-terminal/static/js/runtime-main.87d7e8c0.js.map",
     "static/js/2.10ef3203.chunk.js": "/cmitch-terminal/static/js/2.10ef3203.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.50db93fc.chunk.js": "/cmitch-terminal/static/js/3.50db93fc.chunk.js",
     "static/js/3.50db93fc.chunk.js.map": "/cmitch-terminal/static/js/3.50db93fc.chunk.js.map",
     "index.html": "/cmitch-terminal/index.html",
-    "static/css/main.3d31f555.chunk.css.map": "/cmitch-terminal/static/css/main.3d31f555.chunk.css.map",
+    "static/css/main.d460a297.chunk.css.map": "/cmitch-terminal/static/css/main.d460a297.chunk.css.map",
     "static/js/2.10ef3203.chunk.js.LICENSE.txt": "/cmitch-terminal/static/js/2.10ef3203.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.87d7e8c0.js",
     "static/js/2.10ef3203.chunk.js",
-    "static/css/main.3d31f555.chunk.css",
-    "static/js/main.d6e24ae8.chunk.js"
+    "static/css/main.d460a297.chunk.css",
+    "static/js/main.6f7260bf.chunk.js"
   ]
 }
