@@ -1,7 +1,13 @@
-body {
-  margin: 0;
+html, body {
   padding: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
   height: 100vh;
-  width: 100vw;
-  background-color: black;
+  max-height: 100vh;
+  width: 100%;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 1rem;
+  background: #111111;
+  color: #88FF88;
 }

@@ -1,66 +1,100 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-const $Container = styled.div`
-  width: 100%;
-  height: 100%;
+const $TerminalWindow = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+
+  top: 0;
+  left: 0;
   margin: 0;
   padding: 0;
+  max-height: 100vh;
+`;
+const $TitleBar = styled.div`
+  flex-grow: 0;
+  order: -100;
+
+  margin: 0;
+  padding: 0;
+  padding-left: 0.5rem;
+  min-height: 1.25rem;
+
+  background: #555555;
+  color: #FFFFFF;
+`;
+const $Output = styled.div`
+  flex-grow: 1;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  
+  padding-left: 0.5rem;
+
   overflow: auto;
-  font-size: 1rem;
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  color: lightgreen;
-  display: flex;
-  flex-direction: column;
-  background: black;
+  pre {
+    margin: 0;
+    padding: 0;
+    
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 `;
-
-const $TopBar = styled.div`
-  width: 100%;
-  min-height: 1.5rem;
-  padding-left: 0.5rem;
-  box-sizing: border-box;
-  color: white;
-  background-color: darkgray;
-`;
-
 const $CommandLine = styled.div`
+  flex-grow: 0;
+  order: 100;
+
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+
+  min-height: 1.25rem;
   margin: 0;
   padding: 0;
   padding-left: 0.5rem;
-  input {
-    padding-left: 0.5rem;
+
+  background: #222222;
+  font-family: inherit;
+  font-size: inherit;
+  color: lightgreen;
+
+  .commandPrefix {
+    flex-grow: 0;
+    order: -100;
+    
+    color: inherit;
+  }
+  .commandLine {
     flex-grow: 1;
-    font-size: 1rem;
-    min-height: 1rem;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-    color: lightgreen;
-    background-color: black;
+    order: 100;
+    
+    margin: 0;
+    padding: 0;
+    padding-left: 0.5rem;
+
     border: none;
     outline: none;
     &:focus {
       border: none;
       outline: none;
     }
-  }
-`;
 
-const $Output = styled.div`
-  flex-grow: 1;
-  margin: 0;
-  padding: 0;
-  padding-left: 0.5rem;
-  // color: lightgreen;
-  // font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-  // font-size: 1rem;
-  pre {
-    flex-grow: 1;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    margin: 0;
-    padding: 0;
+    background: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+  .enterButton {
+    flex-grow: 0;
+    order: 200;
+
+    box-sizing: border-box;
+    border: solid green;
+
+    background-color: inherit;
+    font-family: inherit;
+    color: inherit;
   }
 `;
 
@@ -82,7 +116,8 @@ const SPLASH_ASCII = `
      '""--.._:
      Art by Blazej Kozlowski
 
-Welcome to cmitch.info
+Welcome to cmitch.info!
+Type \`help' to get started
 `;
 
 const config = {
@@ -95,15 +130,17 @@ const config = {
       `These shell commands are defined internally.  Type \`help' to see this list.`,
       `Thanks for visiting!`,
       '',
-      'contact',
-      'help',
-      'idunnolol'
+      '\tcontact',
+      '\thelp',
+      '\tidunnolol'
     ],
     'contact': [
-      'Chris Mitchell',
-      'email:\tcmitch419@gmail.com',
-      'github:\thttps://github.com/cmitch419',
-      'linkedin:\thttps://www.linkedin.com/in/cmitch419'
+      '****************************************************',
+      '* Chris Mitchell                                   *',
+      '* email:    cmitch419@gmail.com                    *',
+      '* github:   https://github.com/cmitch419           *',
+      '* linkedin: https://www.linkedin.com/in/cmitch419  *',
+      '****************************************************'
     ],
     'idunnolol': ['¯\\(°_o)/¯']
   }
@@ -112,7 +149,7 @@ const config = {
 function App() {
   const [output, setOutput] = useState([...SPLASH_ASCII.split('\n')]);
   const [history, setHistory] = useState([]);
-  const [command, setCommand] = useState();
+  const [command, setCommand] = useState('');
   const [historyIdx, setHistoryIdx] = useState(history.length);
 
   function handleCommandLineInput(ev) {
@@ -120,7 +157,6 @@ function App() {
   }
 
   function sendCommandAndAddToHistory() {
-
     setHistory([...history, command]);
     let args = command.trim().split(' ');
     let cmd = args[0];
@@ -129,20 +165,20 @@ function App() {
     switch (cmd) {
       case 'clear':
         setOutput(['']);
-        break;
+        setCommand('');
+        return;
       case '':
         break;
       default:
         if (config.COMMANDS[cmd]) newOutput = [...newOutput, '', ...config.COMMANDS[cmd]];
         else newOutput = [...newOutput, '', `Command '${cmd}' not found.`];
-        setOutput([...output, ...newOutput, ''])
+        break;
     }
+    setOutput([...output, ...newOutput, ''])
     setCommand('');
   }
 
   function changeHistoryIdx(diff) {
-
-
     if (0 <= historyIdx + diff && historyIdx + diff < history.length) {
       setHistoryIdx(historyIdx + diff);
       setCommand(history[historyIdx]);
@@ -157,13 +193,10 @@ function App() {
   }
 
   function handleKeys(ev) {
-    const code = ev.code;
-    switch (code) {
+    const key = ev.key;
+    switch (key) {
       case 'Enter':
         sendCommandAndAddToHistory();
-        break;
-      case 'ArrowUp':
-        ev.preventDefault();
         break;
       default:
         break;
@@ -171,18 +204,19 @@ function App() {
   }
 
   return (
-    <$Container>
-      <$TopBar>{config.TERMINAL_TITLE}</$TopBar>
+    <$TerminalWindow>
+      <$TitleBar>{config.TERMINAL_TITLE}</$TitleBar>
       <$Output>
         {output && output.map((line) =>
           <pre>{line}<br /></pre>
         )}
       </$Output>
       <$CommandLine>
-        <div class="commandprefix">{config.COMMAND_LINE_PREFIX}</div>
-        <input type="text" value={command} onChange={handleCommandLineInput} onKeyDown={handleKeys} autoFocus />
+        <div className="commandPrefix">{config.COMMAND_LINE_PREFIX}</div>
+        <input className="commandLine" type="text" value={command} onChange={handleCommandLineInput} onKeyDown={handleKeys} autoFocus />
+        <button className="enterButton" onClick={sendCommandAndAddToHistory}>ENTER</button>
       </$CommandLine>
-    </$Container>
+    </$TerminalWindow>
   );
 }
 
