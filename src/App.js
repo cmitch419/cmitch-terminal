@@ -130,7 +130,7 @@ const config = {
   COMMAND_LINE_PREFIX: 'anon@cmitch.info: $ ',
   COMMANDS: {
     'help': [
-      `CMITCH bash, version 0.1.0`,
+      `CMITCH bash, version 0.1.1`,
       `¯\\(°_o)/¯ <( HELP! )`,
       `These shell commands are defined internally.  Type \`help' to see this list.`,
       `Thanks for visiting!`,
