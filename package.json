@@ -1,8 +1,8 @@
 {
-  "name": "cmitch-terminal",
-  "version": "0.1.0",
+  "name": "terminal",
+  "version": "0.1.1",
   "private": true,
-  "homepage": "http://cmitch419.github.io/cmitch-terminal",
+  "homepage": "http://cmitch.info/terminal",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
